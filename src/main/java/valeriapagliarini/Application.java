@@ -43,7 +43,6 @@ public class Application {
 
         //magazine
 
-        CatalogElementsDAO md = new CatalogElementsDAO(em);
 
         Magazine m1 = new Magazine("977-1234567001", "Rolling Stone",
                 2025, 90, Period.MONTHLY);
@@ -113,6 +112,9 @@ public class Application {
 //delete test (ok su intellij ma non sul db)
         cd.deleteByIsbn("978-0547928227");*/
 
+        cd.findElementByYear(1996).forEach(System.out::println);
+        cd.findBookByAuthor("Tolkien").forEach(System.out::println);
+        cd.findByTitle("Pura Vida").forEach(System.out::println);
 
         em.close();
         emf.close();
