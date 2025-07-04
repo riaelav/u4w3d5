@@ -3,11 +3,10 @@ package valeriapagliarini;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import valeriapagliarini.dao.BorrowsDAO;
 import valeriapagliarini.dao.CatalogElementsDAO;
 import valeriapagliarini.dao.UsersDAO;
-import valeriapagliarini.entities.Book;
-import valeriapagliarini.entities.Magazine;
-import valeriapagliarini.entities.User;
+import valeriapagliarini.entities.*;
 import valeriapagliarini.enums.Period;
 
 import java.time.LocalDate;
@@ -78,18 +77,42 @@ public class Application {
                 "TESS005");
 
 
+        User user1fromDb = ud.findById(1L);
+        CatalogElement book1fromDb = cd.findById(1L);
+        CatalogElement magazine1fromDb = cd.findById(7L);
+
+// Prestiti
+        BorrowsDAO bd = new BorrowsDAO(em);
+
+        Borrow borrow1 = new Borrow(user1fromDb, book1fromDb, LocalDate.now(), null);
+
+        Borrow borrow2 = new Borrow(user1fromDb, magazine1fromDb, LocalDate.of(2025, 7, 1), null);
+
+        Borrow borrow3 = new Borrow(user1fromDb, book1fromDb, LocalDate.of(2025, 6, 1), LocalDate.of(2025, 6, 28));
+
+
         //SAVE TEST
         /*
-         cd.save(b1);
+        cd.save(b1);
         md.save(m1);
         ud.save(u1);
+        bd.save(borrow1);
+
         */
 
 
         //FIND TEST
        /* CatalogElement foundElement = cd.findById(2L);
         System.out.println("Elemento trovato nel catalogo:");
-        System.out.println(foundElement);*/
+        System.out.println(foundElement);
+
+        //find by insb test
+        CatalogElement elementoTrovato = cd.findByIsbn("978-0547928227");
+        System.out.println("Element found:");
+        System.out.println(elementoTrovato);
+//delete test (ok su intellij ma non sul db)
+        cd.deleteByIsbn("978-0547928227");*/
+
 
         em.close();
         emf.close();

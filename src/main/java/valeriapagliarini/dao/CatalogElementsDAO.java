@@ -2,6 +2,8 @@ package valeriapagliarini.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import valeriapagliarini.entities.CatalogElement;
 import valeriapagliarini.exceptions.NotFoundException;
 
@@ -30,4 +32,28 @@ public class CatalogElementsDAO {
         if (found == null) throw new NotFoundException("Element with" + id + " not found");
         return found;
     }
+
+    //QUERY PER RICERCA BY ISBN
+    public CatalogElement findByIsbn(String isbn) {
+        TypedQuery<CatalogElement> query = entityManager.createQuery(
+                "SELECT e FROM CatalogElement e WHERE e.isbn = :isbn", CatalogElement.class);
+        query.setParameter("isbn", isbn);
+
+        return query.getSingleResult();
+    }
+
+    //QUERY DELETE BY ISBN
+    public void deleteByIsbn(String isbn) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Query query = entityManager.createQuery("DELETE FROM CatalogElement e WHERE e.isbn = :isbn");
+        query.setParameter("isbn", isbn);
+
+        transaction.commit();
+
+        System.out.println(" element with ISBN " + isbn + " deleted.");
+    }
+
+
 }

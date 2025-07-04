@@ -39,10 +39,11 @@ public class Borrow {
     public Borrow(User user, CatalogElement catalogElement, LocalDate startDate, LocalDate actualReturnDate) {
         this.user = user;
         this.catalogElement = catalogElement;
-        this.startDate = LocalDate.now();
+        this.startDate = startDate;
         this.expectedReturnDate = this.startDate.plusDays(30);
-        // this.actualReturnDate = LocalDate.now();
+        this.actualReturnDate = actualReturnDate;
     }
+
 
     //getter
 

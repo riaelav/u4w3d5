@@ -54,6 +54,9 @@ public class Book extends CatalogElement {
         return "Book{" +
                 "author='" + author + '\'' +
                 ", genre='" + genre + '\'' +
+                ", title='" + title + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", pages=" + pages +
                 '}';
     }
 }
